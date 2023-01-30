@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Project } from './projects/project.model';
+import { Request } from './requests/request.model';
 import { ProjectsModule } from './projects/projects.module';
 
 @Module({
@@ -17,7 +18,7 @@ import { ProjectsModule } from './projects/projects.module';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       autoLoadModels: true,
-      models: [Project],
+      models: [Project, Request],
     }),
     ProjectsModule,
   ],
