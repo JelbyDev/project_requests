@@ -36,8 +36,11 @@ export class ProjectController {
   }
 
   @Patch(':projectId')
-  update(@Body() projectDto: UpdateProjectDto) {
-    return this.projectsService.updateProject(projectDto);
+  update(
+    @Param('projectId') projectId: number,
+    @Body() projectDto: UpdateProjectDto,
+  ) {
+    return this.projectsService.updateProject(projectId, projectDto);
   }
 
   @Delete(':projectId')

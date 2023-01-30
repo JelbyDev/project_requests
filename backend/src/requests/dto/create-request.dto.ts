@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsNumberString } from 'class-validator';
 
 export class CreateRequestDto {
   @IsNotEmpty()
@@ -6,4 +6,8 @@ export class CreateRequestDto {
 
   @IsNotEmpty()
   description: string;
+
+  @IsNotEmpty()
+  @IsNumberString()
+  project_id: number;
 }

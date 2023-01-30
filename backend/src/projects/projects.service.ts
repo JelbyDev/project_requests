@@ -13,8 +13,11 @@ export class ProjectsService {
     return project;
   }
 
-  async updateProject(projectDto: UpdateProjectDto): Promise<Project> {
-    const project = await this.getProjectById(projectDto.id);
+  async updateProject(
+    projectId: number,
+    projectDto: UpdateProjectDto,
+  ): Promise<Project> {
+    const project = await this.getProjectById(projectId);
     await project.update({ ...projectDto });
     return project;
   }

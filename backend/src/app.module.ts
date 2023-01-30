@@ -4,6 +4,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Project } from './projects/project.model';
 import { Request } from './requests/request.model';
 import { ProjectsModule } from './projects/projects.module';
+import { RequestsModule } from './requests/requests.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProjectsModule } from './projects/projects.module';
       models: [Project, Request],
     }),
     ProjectsModule,
+    RequestsModule,
   ],
   controllers: [],
   providers: [],

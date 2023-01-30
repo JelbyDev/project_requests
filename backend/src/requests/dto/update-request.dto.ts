@@ -10,4 +10,8 @@ export class UpdateRequestDto {
 
   @IsNotEmpty()
   description: string;
+
+  @IsNotEmpty()
+  @IsNumberString()
+  project_id: number;
 }
