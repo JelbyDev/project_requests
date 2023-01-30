@@ -36,6 +36,15 @@ export class RequestsService {
     return request;
   }
 
+  async getRequestsByProjectId(projectId: number): Promise<Request[]> {
+    const requests = await this.requestModel.findAll({
+      where: {
+        project_id: projectId,
+      },
+    });
+    return requests;
+  }
+
   async deleteRequestById(requestId: number): Promise<void> {
     const request = await this.getRequestById(requestId);
     await request.destroy();
