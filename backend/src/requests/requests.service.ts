@@ -22,11 +22,6 @@ export class RequestsService {
     return request;
   }
 
-  async getAllRequests(): Promise<Request[]> {
-    const requests = await this.requestModel.findAll();
-    return requests;
-  }
-
   async getRequestById(requestId: number): Promise<Request> {
     const request = await this.requestModel.findOne({
       where: {
@@ -50,15 +45,10 @@ export class RequestsService {
     await request.destroy();
   }
 
-  async bindRequestToProject(requestId: number, projectId: number) {
+  async updateRequestProjectId(requestId: number, projectId: number) {
     const request = await this.getRequestById(requestId);
     request.project_id = projectId;
     await request.update({ ...request });
-    return request;
-  }
-
-  async unbindRequestToProject(requestId: number) {
-    const request = this.bindRequestToProject(requestId, 0);
     return request;
   }
 }

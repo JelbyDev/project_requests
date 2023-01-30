@@ -16,8 +16,8 @@ export class RequestsController {
   constructor(private readonly requestsService: RequestsService) {}
 
   @Get()
-  findAll() {
-    return this.requestsService.getAllRequests();
+  findAllNotBindToProject() {
+    return this.requestsService.getRequestsByProjectId(0);
   }
 }
 
@@ -40,12 +40,12 @@ export class RequestController {
     @Param('requestId') requestId: number,
     @Param('projectId') projectId: number,
   ) {
-    return this.requestsService.bindRequestToProject(requestId, projectId);
+    return this.requestsService.updateRequestProjectId(requestId, projectId);
   }
 
   @Post(':requestId/unbind/:project_id')
   unbindFromProject(@Param('requestId') requestId: number) {
-    this.requestsService.unbindRequestToProject(requestId);
+    this.requestsService.updateRequestProjectId(requestId, 0);
   }
 
   @Post(':requestId/status/next')
