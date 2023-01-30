@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  postgres:
+    container_name: db_nuxt
+    image: postgres:15.1-alpine3.17
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=nestjs
+      - POSTGRES_PASSWORD=nestjs
+      - POSTGRES_DB=project_requests
+    volumes:
+      - /data/postgres:/data/postgres
