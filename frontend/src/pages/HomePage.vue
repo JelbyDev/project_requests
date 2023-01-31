@@ -13,33 +13,39 @@ function setIsVisibleProjectForm(flag: boolean) {
   <div>
     <ui-page-title>Список проектов</ui-page-title>
 
-    <v-row v-if="projectStore.projects.length">
-      <v-col
-        cols="12"
-        v-for="project in projectStore.projects"
-        :key="project.id"
-      >
-        <v-card
-          :title="project.name"
-          :to="`/projects/${project.id}`"
-          class="w-100"
-          variant="outlined"
-        >
-        </v-card>
-      </v-col>
-    </v-row>
-    <div v-else class="py-12 text-h5 text-center">Список проектов пуст</div>
+    <Teleport to="main">
+      <ui-loader :is-loading="projectStore.isLoadingProjects"></ui-loader>
+    </Teleport>
 
-    <v-row class="justify-end">
-      <v-col cols="auto">
-        <v-btn color="info" @click="setIsVisibleProjectForm(true)"
-          >Новый проект</v-btn
+    <template v-if="!projectStore.isLoadingProjects">
+      <v-row v-if="projectStore.projects.length">
+        <v-col
+          cols="12"
+          v-for="project in projectStore.projects"
+          :key="project.id"
         >
-      </v-col>
-      <v-col cols="auto">
-        <v-btn color="info">Новая заявка</v-btn>
-      </v-col>
-    </v-row>
+          <v-card
+            :title="project.name"
+            :to="`/projects/${project.id}`"
+            class="w-100"
+            variant="outlined"
+          >
+          </v-card>
+        </v-col>
+      </v-row>
+      <div v-else class="py-12 text-h5 text-center">Список проектов пуст</div>
+
+      <v-row class="justify-end">
+        <v-col cols="auto">
+          <v-btn color="info" @click="setIsVisibleProjectForm(true)"
+            >Новый проект</v-btn
+          >
+        </v-col>
+        <v-col cols="auto">
+          <v-btn color="info">Новая заявка</v-btn>
+        </v-col>
+      </v-row>
+    </template>
 
     <ui-modal
       :is-visible="isVisibleProjectForm"
@@ -55,4 +61,9 @@ function setIsVisibleProjectForm(flag: boolean) {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.loader-wrapper {
+  position: relative;
+  min-height: 150px;
+}
+</style>

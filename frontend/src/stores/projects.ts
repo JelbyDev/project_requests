@@ -9,10 +9,12 @@ import {
 
 export const useProjectsStore = defineStore('projects', () => {
   const projects = ref<Project[]>([]);
+  const isLoadingProjects = ref<boolean>(true);
 
   async function loadProjects(): Promise<void> {
     const response: Project[] = await apiGetProjects();
     if (response.length) projects.value = [...response];
+    isLoadingProjects.value = false;
   }
 
   async function createProject(project: Project): Promise<void> {
@@ -34,5 +36,5 @@ export const useProjectsStore = defineStore('projects', () => {
     loadProjects();
   });
 
-  return { projects, createProject, updateProject };
+  return { projects, isLoadingProjects, createProject, updateProject };
 });
