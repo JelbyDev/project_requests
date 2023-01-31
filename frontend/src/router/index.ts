@@ -1,8 +1,20 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router';
+import HomePage from '@/pages/HomePage.vue';
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: []
-})
+  routes: [
+    {
+      path: '',
+      name: 'home',
+      component: HomePage,
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'not-found',
+      component: () => import('@/pages/NotFoundPage.vue'),
+    },
+  ],
+  history: createWebHashHistory(),
+});
 
-export default router
+export default router;
