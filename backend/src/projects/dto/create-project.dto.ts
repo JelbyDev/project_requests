@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateProjectDto {
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Название проекта отсутствует' })
   name: string;
 }
