@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { Project } from '@/types';
-import { useProjectsStore } from '@/stores/projects';
+import { useProjectsListStore } from '@/stores/projectsList';
 import useValidationProjectForm from '@/composables/useValidationProjectForm';
 
 const props = defineProps<{
   project?: Project;
 }>();
 const emits = defineEmits<{ (e: 'success'): void }>();
-const projectStore = useProjectsStore();
+const projectsListStore = useProjectsListStore();
 const { isFormValid, validationRules } = useValidationProjectForm();
 const isSendingForm = ref<boolean>(false);
 const formProject = ref<Project>(
@@ -20,9 +20,9 @@ function sendForm() {
   let sendFunction = null;
 
   if (formProject.value.id) {
-    sendFunction = projectStore.updateProject;
+    sendFunction = projectsListStore.updateProject;
   } else {
-    sendFunction = projectStore.createProject;
+    sendFunction = projectsListStore.createProject;
   }
 
   sendFunction(formProject.value)

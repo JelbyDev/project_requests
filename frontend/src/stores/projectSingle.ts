@@ -1,11 +1,13 @@
 import { onMounted, ref, computed } from 'vue';
+import { defineStore } from 'pinia';
 import type { Project, Request } from '@/types';
-import { apiGetProject, apiGetProjectRequests } from '@/api/Projects';
-import { apiGetUnbindRequests } from '@/api/Request';
-import { useRouter } from 'vue-router';
+import { getProjectApi, getProjectRequestsApi } from '@/api/Project';
+import { getUnbindRequestsApi } from '@/api/Request';
+import { useRouter, useRoute } from 'vue-router';
 
-export function useProjectSingle(projectId: number) {
+export const useProjectSingleStore = defineStore('project-single', () => {
   const router = useRouter();
+  const projectId = Number(useRoute().params?.projectId);
 
   const project = ref<Project | null>(null);
   const requests = ref<Request[]>([]);
@@ -21,7 +23,7 @@ export function useProjectSingle(projectId: number) {
   });
 
   function loadProject(): void {
-    apiGetProject(projectId).then((response) => {
+    getProjectApi(projectId).then((response) => {
       if (response) {
         project.value = { ...response };
         loadProjectRequests();
@@ -34,8 +36,8 @@ export function useProjectSingle(projectId: number) {
 
   async function loadProjectRequests(): Promise<void> {
     const requestsPromises = await Promise.allSettled([
-      apiGetUnbindRequests(),
-      apiGetProjectRequests(projectId),
+      getUnbindRequestsApi(),
+      getProjectRequestsApi(projectId),
     ]);
 
     for (const requestsPromise of requestsPromises) {
@@ -61,4 +63,4 @@ export function useProjectSingle(projectId: number) {
     bindRequests,
     unbindRequests,
   };
-}
+});

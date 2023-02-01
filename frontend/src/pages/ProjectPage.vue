@@ -1,16 +1,15 @@
 <script setup lang="ts">
+import { toRefs } from 'vue';
 import ProjectRequestsList from '@/components/ProjectRequestsList.vue';
-import { useProjectSingle } from '@/composables/useProjectSingle';
-import { useRoute } from 'vue-router';
+import { useProjectSingleStore } from '@/stores/projectSingle';
 
-const { projectId } = useRoute().params;
 const {
   project,
   isLoadingProject,
   isLoadingRequests,
   bindRequests,
   unbindRequests,
-} = useProjectSingle(Number(projectId));
+} = toRefs(useProjectSingleStore());
 </script>
 
 <template>

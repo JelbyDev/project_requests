@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRefs } from 'vue';
 import ProjectCreateOrUpdateForm from '@/components/ProjectCreateOrUpdateForm.vue';
-import { useProjectsStore } from '@/stores/projects';
+import { useProjectsListStore } from '@/stores/projectsList';
 
-const projectStore = useProjectsStore();
+const { projects, isLoadingProjects } = toRefs(useProjectsListStore());
 const isVisibleProjectForm = ref<boolean>(false);
 function setIsVisibleProjectForm(flag: boolean) {
   isVisibleProjectForm.value = flag;
@@ -14,16 +14,12 @@ function setIsVisibleProjectForm(flag: boolean) {
     <ui-page-title>Список проектов</ui-page-title>
 
     <Teleport to="main">
-      <ui-loader :is-loading="projectStore.isLoadingProjects"></ui-loader>
+      <ui-loader :is-loading="isLoadingProjects"></ui-loader>
     </Teleport>
 
-    <template v-if="!projectStore.isLoadingProjects">
-      <v-row v-if="projectStore.projects.length">
-        <v-col
-          cols="12"
-          v-for="project in projectStore.projects"
-          :key="project.id"
-        >
+    <template v-if="!isLoadingProjects">
+      <v-row v-if="projects.length">
+        <v-col cols="12" v-for="project in projects" :key="project.id">
           <v-card
             :title="project.name"
             :to="`/projects/${project.id}`"

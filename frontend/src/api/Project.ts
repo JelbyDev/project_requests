@@ -1,7 +1,7 @@
 import $apiInstance from '@/api/AxiosInstance';
 import type { Project } from '@/types';
 
-export async function apiGetProjects(): Promise<Project[]> {
+export async function getProjectsApi(): Promise<Project[]> {
   let result: Project[] = [];
   try {
     const response = await $apiInstance.get('/projects');
@@ -12,7 +12,7 @@ export async function apiGetProjects(): Promise<Project[]> {
   return result;
 }
 
-export async function apiGetProject(
+export async function getProjectApi(
   projectId: number,
 ): Promise<Project | null> {
   let result: Project | null = null;
@@ -25,7 +25,7 @@ export async function apiGetProject(
   return result;
 }
 
-export async function apiGetProjectRequests(
+export async function getProjectRequestsApi(
   projectId: number,
 ): Promise<Request[]> {
   let result: Request[] = [];
@@ -38,7 +38,7 @@ export async function apiGetProjectRequests(
   return result;
 }
 
-export async function apiCreateProject(
+export async function createProjectApi(
   project: Project,
 ): Promise<Project | null> {
   let result: Project | null = null;
@@ -51,7 +51,7 @@ export async function apiCreateProject(
   return result;
 }
 
-export async function apiUpdateProject(
+export async function updateProjectApi(
   project: Project,
 ): Promise<Project | null> {
   const result: Project | null = null;
