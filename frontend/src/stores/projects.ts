@@ -19,12 +19,12 @@ export const useProjectsStore = defineStore('projects', () => {
 
   async function createProject(project: Project): Promise<void> {
     const response = await apiCreateProject(project);
-    if (response.id) projects.value.push(response);
+    if (response?.id) projects.value.push(response);
   }
 
   async function updateProject(project: Project): Promise<void> {
     const response = await apiUpdateProject(project);
-    if (response.id) {
+    if (response?.id) {
       const updatedProjectIndex = projects.value.findIndex(
         (project: Project) => project.id === response.id,
       );
