@@ -7,8 +7,8 @@ const {
   project,
   isLoadingProject,
   isLoadingRequests,
-  bindRequests,
-  unbindRequests,
+  projectRequests,
+  freeRequests,
 } = toRefs(useProjectSingleStore());
 </script>
 
@@ -26,7 +26,7 @@ const {
           <ProjectRequestsList
             list-title="Задачи проекта"
             :is-loading-requests="isLoadingRequests"
-            :requests="bindRequests"
+            :requests="projectRequests"
           ></ProjectRequestsList>
         </v-col>
 
@@ -34,7 +34,7 @@ const {
           <ProjectRequestsList
             list-title="Задачи без проекта"
             :is-loading-requests="isLoadingRequests"
-            :requests="unbindRequests"
+            :requests="freeRequests"
           ></ProjectRequestsList>
         </v-col>
       </v-row>

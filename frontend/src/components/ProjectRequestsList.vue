@@ -7,7 +7,6 @@ defineProps<{
   listTitle: string;
   requests: Request[];
   isLoadingRequests: boolean;
-  projectId?: number;
 }>();
 </script>
 

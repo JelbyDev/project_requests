@@ -1,5 +1,5 @@
 import $apiInstance from '@/api/AxiosInstance';
-import type { Project } from '@/types';
+import type { Project, Request } from '@/types';
 
 export async function getProjectsApi(): Promise<Project[]> {
   let result: Project[] = [];

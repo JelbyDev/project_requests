@@ -1,7 +1,7 @@
 import $apiInstance from '@/api/AxiosInstance';
 import type { Request } from '@/types';
 
-export async function getUnbindRequestsApi(): Promise<Request[]> {
+export async function getFreeRequestsApi(): Promise<Request[]> {
   let result: Request[] = [];
   try {
     const response = await $apiInstance.get(`/requests`);

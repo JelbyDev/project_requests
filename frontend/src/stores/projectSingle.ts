@@ -1,9 +1,9 @@
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, onUpdated, ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import type { Project, Request } from '@/types';
 import { getProjectApi, getProjectRequestsApi } from '@/api/Project';
 import {
-  getUnbindRequestsApi,
+  getFreeRequestsApi,
   bindRequestToProjectApi,
   unbindRequestToProjectApi,
 } from '@/api/Request';
@@ -18,29 +18,28 @@ export const useProjectSingleStore = defineStore('project-single', () => {
   const isLoadingProject = ref<boolean>(true);
   const isLoadingRequests = ref<boolean>(true);
 
-  const bindRequests = computed(() => {
+  const projectRequests = computed<Request[]>(() => {
     return requests.value.filter((request) => request.project_id);
   });
 
-  const unbindRequests = computed(() => {
+  const freeRequests = computed<Request[]>(() => {
     return requests.value.filter((request) => !request.project_id);
   });
 
-  function loadProject(): void {
-    getProjectApi(projectId).then((projectsFromApi) => {
-      if (projectsFromApi) {
-        project.value = { ...projectsFromApi };
-        loadProjectRequests();
-        isLoadingProject.value = false;
-      } else {
-        router.push('/not-found');
-      }
-    });
+  async function loadProject(): Promise<void> {
+    const projectsFromApi = await getProjectApi(projectId);
+    if (projectsFromApi) {
+      project.value = { ...projectsFromApi };
+      loadRequests();
+      isLoadingProject.value = false;
+    } else {
+      router.push('/not-found');
+    }
   }
 
-  async function loadProjectRequests(): Promise<void> {
+  async function loadRequests(): Promise<void> {
     const requestsPromises = await Promise.allSettled([
-      getUnbindRequestsApi(),
+      getFreeRequestsApi(),
       getProjectRequestsApi(projectId),
     ]);
 
@@ -94,8 +93,8 @@ export const useProjectSingleStore = defineStore('project-single', () => {
     project,
     isLoadingProject,
     isLoadingRequests,
-    bindRequests,
-    unbindRequests,
+    freeRequests,
+    projectRequests,
     bindRequestToProject,
     unbindRequestToProject,
   };
