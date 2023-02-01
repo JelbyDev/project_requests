@@ -5,13 +5,16 @@ defineProps<{ isLoading: boolean }>();
 <template>
   <div
     v-if="isLoading"
-    class="progress-circular-wrapper d-flex justify-center align-center"
+    class="progress-circular-wrapper d-flex flex-wrap justify-center align-center align-content-center"
   >
     <v-progress-circular
       :size="50"
       color="info"
       indeterminate
     ></v-progress-circular>
+    <div class="w-100 text-center mt-5">
+      <slot></slot>
+    </div>
   </div>
 </template>
 

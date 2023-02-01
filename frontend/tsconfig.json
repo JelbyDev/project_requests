@@ -2,7 +2,14 @@
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
-    "lib": ["ES2015", "ES2016", "DOM", "DOM.Iterable", "ES2018.PROMISE"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2015",
+      "ES2016",
+      "ES2018.PROMISE",
+      "ES2020.PROMISE"
+    ],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

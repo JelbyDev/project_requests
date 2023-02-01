@@ -9,6 +9,11 @@ const router = createRouter({
       component: HomePage,
     },
     {
+      path: '/projects/:projectId',
+      name: 'project',
+      component: () => import('@/pages/ProjectPage.vue'),
+    },
+    {
       path: '/:catchAll(.*)',
       name: 'not-found',
       component: () => import('@/pages/NotFoundPage.vue'),
