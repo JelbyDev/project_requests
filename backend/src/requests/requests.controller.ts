@@ -45,7 +45,7 @@ export class RequestController {
 
   @Post(':requestId/unbind/:project_id')
   unbindFromProject(@Param('requestId') requestId: number) {
-    this.requestsService.updateRequestProjectId(requestId, 0);
+    return this.requestsService.updateRequestProjectId(requestId, 0);
   }
 
   @Post(':requestId/status/next')

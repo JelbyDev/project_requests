@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Request } from '@/types';
 import ProjectRequestsBindButton from '@/components/ProjectRequestsBindButton.vue';
+import ProjectRequestsUnbindButton from '@/components/ProjectRequestsUnbindButton.vue';
 
 defineProps<{
   listTitle: string;
@@ -20,6 +21,7 @@ defineProps<{
       <v-card :to="`/requests/${request.id}`" class="w-100" variant="outlined">
         <div class="d-flex justify-space-between align-center">
           <v-card-title>{{ request.name }}</v-card-title>
+
           <v-card-actions class="pa-0 pr-2">
             <ProjectRequestsBindButton
               v-if="!request.project_id"
@@ -28,9 +30,9 @@ defineProps<{
               Привязать
             </ProjectRequestsBindButton>
 
-            <v-btn v-else variant="outlined" color="info" @click.prevent>
+            <ProjectRequestsUnbindButton v-else :request-id="request.id ?? 0">
               Отвязать
-            </v-btn>
+            </ProjectRequestsUnbindButton>
           </v-card-actions>
         </div>
       </v-card>
