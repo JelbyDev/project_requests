@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Request } from '@/types';
+import ProjectRequestsBindButton from '@/components/ProjectRequestsBindButton.vue';
 
 defineProps<{
   listTitle: string;
@@ -20,14 +21,13 @@ defineProps<{
         <div class="d-flex justify-space-between align-center">
           <v-card-title>{{ request.name }}</v-card-title>
           <v-card-actions class="pa-0 pr-2">
-            <v-btn
+            <ProjectRequestsBindButton
               v-if="!request.project_id"
-              variant="outlined"
-              color="info"
-              @click.prevent
+              :request-id="request.id ?? 0"
             >
               Привязать
-            </v-btn>
+            </ProjectRequestsBindButton>
+
             <v-btn v-else variant="outlined" color="info" @click.prevent>
               Отвязать
             </v-btn>

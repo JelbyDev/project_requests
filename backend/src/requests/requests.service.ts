@@ -47,8 +47,7 @@ export class RequestsService {
 
   async updateRequestProjectId(requestId: number, projectId: number) {
     const request = await this.getRequestById(requestId);
-    request.project_id = projectId;
-    await request.update({ ...request });
+    await request.update({ project_id: projectId });
     return request;
   }
 }

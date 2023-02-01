@@ -2,7 +2,7 @@ import { onMounted, ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import type { Project, Request } from '@/types';
 import { getProjectApi, getProjectRequestsApi } from '@/api/Project';
-import { getUnbindRequestsApi } from '@/api/Request';
+import { getUnbindRequestsApi, bindRequestToProjectApi } from '@/api/Request';
 import { useRouter, useRoute } from 'vue-router';
 
 export const useProjectSingleStore = defineStore('project-single', () => {
@@ -23,9 +23,9 @@ export const useProjectSingleStore = defineStore('project-single', () => {
   });
 
   function loadProject(): void {
-    getProjectApi(projectId).then((response) => {
-      if (response) {
-        project.value = { ...response };
+    getProjectApi(projectId).then((projectsFromApi) => {
+      if (projectsFromApi) {
+        project.value = { ...projectsFromApi };
         loadProjectRequests();
         isLoadingProject.value = false;
       } else {
@@ -52,6 +52,23 @@ export const useProjectSingleStore = defineStore('project-single', () => {
     isLoadingRequests.value = false;
   }
 
+  async function bindRequestToProject(requestId: number) {
+    if (requestId && projectId) {
+      const requestFromApi = await bindRequestToProjectApi(
+        requestId,
+        projectId,
+      );
+
+      if (requestFromApi) {
+        const foundRequestIndex = requests.value.findIndex(
+          (request) => request.id === requestId,
+        );
+        if (foundRequestIndex !== -1)
+          requests.value[foundRequestIndex] = { ...requestFromApi };
+      }
+    }
+  }
+
   onMounted(() => {
     loadProject();
   });
@@ -62,5 +79,6 @@ export const useProjectSingleStore = defineStore('project-single', () => {
     isLoadingRequests,
     bindRequests,
     unbindRequests,
+    bindRequestToProject,
   };
 });

@@ -11,3 +11,19 @@ export async function getUnbindRequestsApi(): Promise<Request[]> {
   }
   return result;
 }
+
+export async function bindRequestToProjectApi(
+  requestId: number,
+  projectId: number,
+): Promise<Request | null> {
+  let result: Request | null = null;
+  try {
+    const response = await $apiInstance.post(
+      `/request/${requestId}/bind/${projectId}`,
+    );
+    result = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+  return result;
+}
