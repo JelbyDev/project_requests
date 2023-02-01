@@ -12,23 +12,23 @@ export const useProjectsListStore = defineStore('projects-list', () => {
   const isLoadingProjects = ref<boolean>(true);
 
   async function loadProjects(): Promise<void> {
-    const response: Project[] = await getProjectsApi();
-    if (response.length) projects.value = [...response];
+    const projectsFromApi: Project[] = await getProjectsApi();
+    if (projectsFromApi.length) projects.value = [...projectsFromApi];
     isLoadingProjects.value = false;
   }
 
   async function createProject(project: Project): Promise<void> {
-    const response = await createProjectApi(project);
-    if (response?.id) projects.value.push(response);
+    const projectFromApi = await createProjectApi(project);
+    if (projectFromApi?.id) projects.value.push(projectFromApi);
   }
 
   async function updateProject(project: Project): Promise<void> {
-    const response = await updateProjectApi(project);
-    if (response?.id) {
+    const projectFromApi = await updateProjectApi(project);
+    if (projectFromApi?.id) {
       const updatedProjectIndex = projects.value.findIndex(
-        (project: Project) => project.id === response.id,
+        (project: Project) => project.id === projectFromApi.id,
       );
-      projects.value[updatedProjectIndex] = { ...response };
+      projects.value[updatedProjectIndex] = { ...projectFromApi };
     }
   }
 
