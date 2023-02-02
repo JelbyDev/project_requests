@@ -89,14 +89,7 @@ export const useProjectSingleStore = defineStore('project-single', () => {
   }
 
   watch(projectId, () => {
-    if (projectId.value === 0) {
-      project.value = null;
-      requests.value = [];
-      isLoadingProject.value = true;
-      isLoadingRequests.value = true;
-    } else {
-      loadProject();
-    }
+    loadProject();
   });
 
   return {

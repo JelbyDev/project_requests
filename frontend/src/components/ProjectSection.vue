@@ -13,10 +13,12 @@ const {
   freeRequests,
 } = toRefs(useProjectSingleStore());
 
-projectId.value = Number(useRoute().params?.projectId);
+const pageProjectId = Number(useRoute().params?.projectId);
+if (pageProjectId === projectId.value) isLoadingProject.value = false;
+projectId.value = pageProjectId;
+
 onBeforeRouteLeave(() => {
-  console.log('1');
-  projectId.value = 0;
+  isLoadingProject.value = true;
 });
 </script>
 
@@ -26,7 +28,7 @@ onBeforeRouteLeave(() => {
       <ui-loader :is-loading="isLoadingProject"></ui-loader>
     </Teleport>
 
-    <div v-if="project">
+    <div v-if="project && !isLoadingProject">
       <div class="mb-10">
         <ProjectSectionRequests
           list-title="Задачи проекта"

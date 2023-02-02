@@ -9,4 +9,12 @@ export interface Request {
   description: string;
   project_id: number;
   status_id: number;
+  current_status_info?: Status;
+}
+
+export interface Status {
+  id: number;
+  status_code: string;
+  name: string;
+  parent_id: number;
 }
