@@ -3,9 +3,15 @@ import { toRefs } from 'vue';
 import { useRoute, onBeforeRouteLeave } from 'vue-router';
 import { useRequestSingleStore } from '@/stores/requestSingle';
 
-const { requestId, request, isLoadingRequest } = toRefs(
-  useRequestSingleStore(),
-);
+const {
+  requestId,
+  request,
+  isLoadingRequest,
+  currentStatus,
+  nextStatuses,
+  prevStatus,
+  isLoadingStatuses,
+} = toRefs(useRequestSingleStore());
 const pageRequestId = Number(useRoute().params?.requestId);
 if (pageRequestId === requestId.value) isLoadingRequest.value = false;
 requestId.value = pageRequestId;
@@ -26,7 +32,31 @@ onBeforeRouteLeave(() => {
       {{ request.description }}
 
       <div class="text-h5 mt-10 mb-3">Статус</div>
-      Текущий статус: {{ request.current_status?.name }}
+      <div v-if="isLoadingStatuses" class="loader-wrapper">
+        <ui-loader :is-loading="isLoadingStatuses">
+          Загружаю информацию по статусам...
+        </ui-loader>
+      </div>
+      <div v-else>
+        <div>Текущий статус: {{ currentStatus?.name }}</div>
+        <div>
+          Следующие статусы:
+          <div v-for="status in nextStatuses" :key="status.id">
+            {{ status.name }}
+          </div>
+        </div>
+        <div>
+          Предыдущй:
+          {{ prevStatus?.name }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.loader-wrapper {
+  position: relative;
+  min-height: 150px;
+}
+</style>

@@ -34,6 +34,15 @@ export class StatusesService {
     return status;
   }
 
+  async getStatusById(statusId: number): Promise<Status> {
+    const status = await this.statusModel.findOne({
+      where: {
+        id: statusId,
+      },
+    });
+    return status;
+  }
+
   async getStatusByCode(statusCode: string): Promise<Status> {
     const status = await this.statusModel.findOne({
       where: {
@@ -42,7 +51,6 @@ export class StatusesService {
     });
     return status;
   }
-
   async getStatusesByParentId(parentId: number): Promise<Status[]> {
     const statuses = await this.statusModel.findAll({
       where: {

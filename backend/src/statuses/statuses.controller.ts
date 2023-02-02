@@ -44,8 +44,9 @@ export class StatusesController {
     return this.statusesService.getStatusesByParentId(statusId);
   }
 
-  @Get('prev/:parentId')
-  prevStatuses(@Param('parentId') parentId: number) {
-    return this.statusesService.getStatusesByParentId(parentId);
+  @Get('prev/:statusId')
+  async prevStatuses(@Param('statusId') statusId: number) {
+    const status = await this.statusesService.getStatusById(statusId);
+    return this.statusesService.getStatusById(status.parent_id);
   }
 }
