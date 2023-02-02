@@ -12,6 +12,19 @@ export async function getFreeRequestsApi(): Promise<Request[]> {
   return result;
 }
 
+export async function getRequestApi(
+  requestId: number,
+): Promise<Request | null> {
+  let result: Request | null = null;
+  try {
+    const response = await $apiInstance.get(`/request/${requestId}`);
+    result = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+  return result;
+}
+
 export async function createRequestApi(
   request: Request,
 ): Promise<Request | null> {

@@ -27,9 +27,9 @@ export const useProjectSingleStore = defineStore('project-single', () => {
   });
 
   async function loadProject(): Promise<void> {
-    const projectsFromApi = await getProjectApi(projectId.value);
-    if (projectsFromApi) {
-      project.value = { ...projectsFromApi };
+    const projectFromApi = await getProjectApi(projectId.value);
+    if (projectFromApi) {
+      project.value = { ...projectFromApi };
       loadRequests();
       isLoadingProject.value = false;
     } else {

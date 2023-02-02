@@ -14,6 +14,11 @@ const router = createRouter({
       component: () => import('@/pages/ProjectPage.vue'),
     },
     {
+      path: '/requests/:requestId',
+      name: 'request',
+      component: () => import('@/pages/RequestPage.vue'),
+    },
+    {
       path: '/:catchAll(.*)',
       name: 'not-found',
       component: () => import('@/pages/NotFoundPage.vue'),
