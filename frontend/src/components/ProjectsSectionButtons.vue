@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { Project } from '@/types';
+import type { Project, Request } from '@/types';
 import { useProjectsListStore } from '@/stores/projectsList';
 import ProjectCreateOrUpdateForm from '@/components/ProjectCreateOrUpdateForm.vue';
+import RequestCreateOrUpdateForm from '@/components/RequestCreateOrUpdateForm.vue';
 
-const { createProject, updateProject } = useProjectsListStore();
+const { createProject, createRequest } = useProjectsListStore();
 
 const isVisibleProjectForm = ref<boolean>(false);
 function setIsVisibleProjectForm(flag: boolean) {
@@ -12,16 +13,19 @@ function setIsVisibleProjectForm(flag: boolean) {
 }
 
 function onSubmitProjectForm(project: Project) {
-  let sendFunction = null;
-
-  if (project.id) {
-    sendFunction = updateProject;
-  } else {
-    sendFunction = createProject;
-  }
-
-  sendFunction(project).then(() => {
+  createProject(project).then(() => {
     setIsVisibleProjectForm(false);
+  });
+}
+
+const isVisibleRequestForm = ref<boolean>(false);
+function setIsVisibleRequestForm(flag: boolean) {
+  isVisibleRequestForm.value = flag;
+}
+
+function onSubmitRequestForm(request: Request) {
+  createRequest(request).then(() => {
+    setIsVisibleRequestForm(false);
   });
 }
 </script>
@@ -35,7 +39,9 @@ function onSubmitProjectForm(project: Project) {
         >
       </v-col>
       <v-col cols="auto">
-        <v-btn color="info">Новая заявка</v-btn>
+        <v-btn color="info" @click="setIsVisibleRequestForm(true)"
+          >Новая заявка</v-btn
+        >
       </v-col>
     </v-row>
 
@@ -48,6 +54,18 @@ function onSubmitProjectForm(project: Project) {
         <ProjectCreateOrUpdateForm
           @submit="onSubmitProjectForm"
         ></ProjectCreateOrUpdateForm>
+      </template>
+    </ui-modal>
+
+    <ui-modal
+      :is-visible="isVisibleRequestForm"
+      @close="setIsVisibleRequestForm"
+    >
+      <template #header>Форма заявки</template>
+      <template #body>
+        <RequestCreateOrUpdateForm
+          @submit="onSubmitRequestForm"
+        ></RequestCreateOrUpdateForm>
       </template>
     </ui-modal>
   </div>

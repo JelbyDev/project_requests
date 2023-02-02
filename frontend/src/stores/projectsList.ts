@@ -1,11 +1,8 @@
 import { ref, onMounted } from 'vue';
 import { defineStore } from 'pinia';
-import type { Project } from '@/types';
-import {
-  getProjectsApi,
-  createProjectApi,
-  updateProjectApi,
-} from '@/api/Project';
+import type { Project, Request } from '@/types';
+import { getProjectsApi, createProjectApi } from '@/api/Project';
+import { createRequestApi } from '@/api/Request';
 
 export const useProjectsListStore = defineStore('projects-list', () => {
   const projects = ref<Project[]>([]);
@@ -22,19 +19,13 @@ export const useProjectsListStore = defineStore('projects-list', () => {
     if (projectFromApi?.id) projects.value.push(projectFromApi);
   }
 
-  async function updateProject(project: Project): Promise<void> {
-    const projectFromApi = await updateProjectApi(project);
-    if (projectFromApi?.id) {
-      const updatedProjectIndex = projects.value.findIndex(
-        (project: Project) => project.id === projectFromApi.id,
-      );
-      projects.value[updatedProjectIndex] = { ...projectFromApi };
-    }
+  async function createRequest(request: Request): Promise<void> {
+    const requestFromApi = await createRequestApi(request);
   }
 
   onMounted(() => {
     loadProjects();
   });
 
-  return { projects, isLoadingProjects, createProject, updateProject };
+  return { projects, isLoadingProjects, createProject, createRequest };
 });
