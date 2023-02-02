@@ -8,4 +8,5 @@ const { project } = toRefs(useProjectSingleStore());
 
 <template>
   <ui-page-title v-if="project">{{ project.name }}</ui-page-title>
+  <ProjectSection></ProjectSection>
 </template>
