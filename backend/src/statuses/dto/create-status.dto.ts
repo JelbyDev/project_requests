@@ -8,7 +8,9 @@ export class CreateStatusDto {
   @IsNotEmpty({ message: 'Название статуса отсутствует' })
   name: string;
 
-  @IsNotEmpty({ message: 'prev_status_code отсутствует' })
-  @IsString({ message: 'prev_status_code должен быть строкой' })
-  prev_status_code: string;
+  @IsNotEmpty({ message: 'parent_status_code отсутствует' })
+  @IsString({ message: 'parent_status_code должен быть числом' })
+  parent_status_code: string;
+
+  parent_id?: number;
 }

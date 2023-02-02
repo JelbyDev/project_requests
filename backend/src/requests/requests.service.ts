@@ -14,7 +14,7 @@ export class RequestsService {
 
   async createRequest(requestDto: CreateRequestDto): Promise<Request> {
     const defaultStatus = await this.statusesService.getStartStatus();
-    requestDto.status_code = defaultStatus.status_code;
+    requestDto.status_id = defaultStatus.id;
     const request = await this.requestModel.create(requestDto);
     return request;
   }
@@ -30,6 +30,7 @@ export class RequestsService {
 
   async getRequestById(requestId: number): Promise<Request> {
     const request = await this.requestModel.findOne({
+      include: { all: true },
       where: {
         id: requestId,
       },

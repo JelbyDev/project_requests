@@ -1,4 +1,13 @@
-import { Model, Column, Table, DataType } from 'sequelize-typescript';
+import {
+  Model,
+  Column,
+  Table,
+  DataType,
+  ForeignKey,
+  BelongsTo,
+} from 'sequelize-typescript';
+import { Project } from 'src/projects/project.model';
+import { Status } from 'src/statuses/status.model';
 
 interface RequestCreationFields {
   name: string;
@@ -21,9 +30,14 @@ export class Request extends Model<Request, RequestCreationFields> {
   @Column({ type: DataType.STRING, allowNull: false })
   description: string;
 
+  @ForeignKey(() => Project)
   @Column({ type: DataType.INTEGER, defaultValue: 0 })
   project_id: number;
 
-  @Column({ type: DataType.STRING, defaultValue: '' })
-  status_code: string;
+  @ForeignKey(() => Status)
+  @Column({ type: DataType.INTEGER, defaultValue: 0 })
+  status_id: number;
+
+  @BelongsTo(() => Status)
+  current_status_info: Status;
 }

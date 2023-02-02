@@ -9,26 +9,26 @@ export class StatusesController {
   @Get('create_default')
   async findById() {
     const defaultStatuses: CreateStatusDto[] = [
-      { name: 'Заготовка', status_code: 'work_piece', prev_status_code: '' },
+      { name: 'Заготовка', status_code: 'work_piece', parent_status_code: '' },
       {
         name: 'В работе',
         status_code: 'at_work',
-        prev_status_code: 'work_piece',
+        parent_status_code: 'work_piece',
       },
       {
         name: 'На согласовании',
         status_code: 'on_approval',
-        prev_status_code: 'at_work',
+        parent_status_code: 'at_work',
       },
       {
         name: 'Принята',
         status_code: 'accepted',
-        prev_status_code: 'on_approval',
+        parent_status_code: 'on_approval',
       },
       {
         name: 'Отказ',
         status_code: 'refusal',
-        prev_status_code: 'on_approval',
+        parent_status_code: 'on_approval',
       },
     ];
 

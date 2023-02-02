@@ -11,5 +11,6 @@ export class CreateRequestDto {
   @IsNumber({}, { message: 'project_id заявки должен быть числом' })
   project_id: number;
 
-  status_code: string;
+  @IsNumber({}, { message: 'status_id заявки должен быть числом' })
+  status_id: number;
 }

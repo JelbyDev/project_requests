@@ -8,20 +8,27 @@ export class StatusesService {
   constructor(@InjectModel(Status) private statusModel: typeof Status) {}
 
   async createStatus(statusDto: CreateStatusDto): Promise<Status> {
-    if (statusDto.prev_status_code) {
-      const parentCodeRow = await this.getStatusByCode(
-        statusDto.prev_status_code,
+    if (statusDto.parent_status_code) {
+      statusDto.parent_id = await this.getParentIdByStatusCode(
+        statusDto.parent_status_code,
       );
-      if (!parentCodeRow) throw new Error('Не найден код статуса');
+    } else {
+      statusDto.parent_id = 0;
     }
     const status = await this.statusModel.create(statusDto);
     return status;
   }
 
+  async getParentIdByStatusCode(statusCode: string): Promise<number> {
+    const parentStatus = await this.getStatusByCode(statusCode);
+    if (!parentStatus) throw new Error('Не найден код статуса');
+    return parentStatus.id;
+  }
+
   async getStartStatus(): Promise<Status> {
     const status = await this.statusModel.findOne({
       where: {
-        prev_status_code: '',
+        parent_id: 0,
       },
     });
     return status;

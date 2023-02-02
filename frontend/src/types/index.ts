@@ -8,5 +8,5 @@ export interface Request {
   name: string;
   description: string;
   project_id: number;
-  status_code: string;
+  status_id: number;
 }

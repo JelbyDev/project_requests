@@ -1,4 +1,11 @@
-import { Model, Column, Table, DataType } from 'sequelize-typescript';
+import {
+  Model,
+  Column,
+  Table,
+  DataType,
+  ForeignKey,
+} from 'sequelize-typescript';
+import { Request } from 'src/requests/request.model';
 
 interface ProjectCreationFields {
   name: string;
@@ -12,6 +19,7 @@ export class Project extends Model<Project, ProjectCreationFields> {
     autoIncrement: true,
     primaryKey: true,
   })
+  @ForeignKey(() => Request)
   id: number;
 
   @Column({ type: DataType.STRING, allowNull: false })

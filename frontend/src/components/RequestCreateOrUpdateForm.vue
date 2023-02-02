@@ -14,7 +14,7 @@ const isSendingForm = ref<boolean>(false);
 const formRequest = ref<Request>(
   props.request
     ? { ...props.request }
-    : { name: '', description: '', project_id: 0, status_code: '' },
+    : { name: '', description: '', project_id: 0, status_id: 0 },
 );
 
 function onSubmit() {
