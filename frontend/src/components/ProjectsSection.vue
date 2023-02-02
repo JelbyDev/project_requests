@@ -2,6 +2,7 @@
 import { toRefs } from 'vue';
 import { useProjectsListStore } from '@/stores/projectsList';
 import ProjectsSectionButtons from './ProjectsSectionButtons.vue';
+
 const { projects, isLoadingProjects } = toRefs(useProjectsListStore());
 </script>
 

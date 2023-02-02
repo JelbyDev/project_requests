@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Request } from '@/types';
-import ProjectRequestsBindButton from '@/components/ProjectRequestsBindButton.vue';
-import ProjectRequestsUnbindButton from '@/components/ProjectRequestsUnbindButton.vue';
+import ProjectRequestsBindButton from '@/components/ProjectSectionRequestsBindButton.vue';
+import ProjectRequestsUnbindButton from '@/components/ProjectSectionRequestsUnbindButton.vue';
 
 defineProps<{
   listTitle: string;
@@ -26,11 +26,11 @@ defineProps<{
               v-if="!request.project_id"
               :request-id="request.id ?? 0"
             >
-              Привязать
+              Прикрепить
             </ProjectRequestsBindButton>
 
             <ProjectRequestsUnbindButton v-else :request-id="request.id ?? 0">
-              Отвязать
+              Открепить
             </ProjectRequestsUnbindButton>
           </v-card-actions>
         </div>
