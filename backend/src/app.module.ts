@@ -3,8 +3,10 @@ import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Project } from './projects/project.model';
 import { Request } from './requests/request.model';
+import { Status } from './statuses/status.model';
 import { ProjectsModule } from './projects/projects.module';
 import { RequestsModule } from './requests/requests.module';
+import { StatusesModule } from './statuses/statuses.module';
 
 @Module({
   imports: [
@@ -19,10 +21,11 @@ import { RequestsModule } from './requests/requests.module';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       autoLoadModels: true,
-      models: [Project, Request],
+      models: [Project, Request, Status],
     }),
     ProjectsModule,
     RequestsModule,
+    StatusesModule,
   ],
   controllers: [],
   providers: [],

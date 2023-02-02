@@ -2,6 +2,7 @@ import { Model, Column, Table, DataType } from 'sequelize-typescript';
 
 interface RequestCreationFields {
   name: string;
+  description: string;
 }
 
 @Table({ tableName: 'requests' })
