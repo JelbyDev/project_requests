@@ -2,14 +2,18 @@
 import { toRefs } from 'vue';
 import ProjectRequestsList from '@/components/ProjectRequestsList.vue';
 import { useProjectSingleStore } from '@/stores/projectSingle';
+import { useRoute } from 'vue-router';
 
 const {
+  projectId,
   project,
   isLoadingProject,
   isLoadingRequests,
   projectRequests,
   freeRequests,
 } = toRefs(useProjectSingleStore());
+
+projectId.value = Number(useRoute().params?.projectId);
 </script>
 
 <template>

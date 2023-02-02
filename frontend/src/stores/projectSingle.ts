@@ -1,4 +1,4 @@
-import { onMounted, onUpdated, ref, computed } from 'vue';
+import { watch, ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import type { Project, Request } from '@/types';
 import { getProjectApi, getProjectRequestsApi } from '@/api/Project';
@@ -7,11 +7,11 @@ import {
   bindRequestToProjectApi,
   unbindRequestToProjectApi,
 } from '@/api/Request';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter, onBeforeRouteLeave } from 'vue-router';
 
 export const useProjectSingleStore = defineStore('project-single', () => {
   const router = useRouter();
-  const projectId = Number(useRoute().params?.projectId);
+  const projectId = ref<number>(0);
 
   const project = ref<Project | null>(null);
   const requests = ref<Request[]>([]);
@@ -27,7 +27,7 @@ export const useProjectSingleStore = defineStore('project-single', () => {
   });
 
   async function loadProject(): Promise<void> {
-    const projectsFromApi = await getProjectApi(projectId);
+    const projectsFromApi = await getProjectApi(projectId.value);
     if (projectsFromApi) {
       project.value = { ...projectsFromApi };
       loadRequests();
@@ -38,28 +38,31 @@ export const useProjectSingleStore = defineStore('project-single', () => {
   }
 
   async function loadRequests(): Promise<void> {
+    let freeRequests: Request[] = [];
+    let projectRequests: Request[] = [];
+
     const requestsPromises = await Promise.allSettled([
+      getProjectRequestsApi(projectId.value),
       getFreeRequestsApi(),
-      getProjectRequestsApi(projectId),
     ]);
 
-    for (const requestsPromise of requestsPromises) {
-      if (
-        requestsPromise.status === 'fulfilled' &&
-        requestsPromise.value.length
-      ) {
-        requests.value = [...requests.value, ...requestsPromise.value];
-      }
+    if (requestsPromises[0].status === 'fulfilled') {
+      projectRequests = [...requestsPromises[0].value];
     }
 
+    if (requestsPromises[1].status === 'fulfilled') {
+      freeRequests = [...requestsPromises[1].value];
+    }
+
+    requests.value = [...projectRequests, ...freeRequests];
     isLoadingRequests.value = false;
   }
 
   async function bindRequestToProject(requestId: number) {
-    if (requestId && projectId) {
+    if (requestId && projectId.value) {
       const requestFromApi = await bindRequestToProjectApi(
         requestId,
-        projectId,
+        projectId.value,
       );
 
       if (requestFromApi) updateRequestInStoreById(requestId, requestFromApi);
@@ -85,11 +88,13 @@ export const useProjectSingleStore = defineStore('project-single', () => {
       requests.value[foundRequestIndex] = { ...newRequest };
   }
 
-  onMounted(() => {
+  watch(projectId, () => {
+    project.value = null;
     loadProject();
   });
 
   return {
+    projectId,
     project,
     isLoadingProject,
     isLoadingRequests,
