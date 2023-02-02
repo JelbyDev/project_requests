@@ -26,7 +26,7 @@ onBeforeRouteLeave(() => {
       {{ request.description }}
 
       <div class="text-h5 mt-10 mb-3">Статус</div>
-      Текущий статус: {{ request.current_status_info?.name }}
+      Текущий статус: {{ request.current_status?.name }}
     </div>
   </div>
 </template>

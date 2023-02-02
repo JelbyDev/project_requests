@@ -42,4 +42,13 @@ export class StatusesService {
     });
     return status;
   }
+
+  async getStatusesByParentId(parentId: number): Promise<Status[]> {
+    const statuses = await this.statusModel.findAll({
+      where: {
+        parent_id: parentId,
+      },
+    });
+    return statuses;
+  }
 }

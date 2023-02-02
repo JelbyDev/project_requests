@@ -39,5 +39,5 @@ export class Request extends Model<Request, RequestCreationFields> {
   status_id: number;
 
   @BelongsTo(() => Status)
-  current_status_info: Status;
+  current_status: Status;
 }

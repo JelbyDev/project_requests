@@ -1,4 +1,4 @@
-import { Get, Controller } from '@nestjs/common';
+import { Get, Controller, Param } from '@nestjs/common';
 import { CreateStatusDto } from './dto/create-status.dto';
 import { StatusesService } from './statuses.service';
 
@@ -37,5 +37,15 @@ export class StatusesController {
     }
 
     return defaultStatuses;
+  }
+
+  @Get('next/:statusId')
+  nextStatuses(@Param('statusId') statusId: number) {
+    return this.statusesService.getStatusesByParentId(statusId);
+  }
+
+  @Get('prev/:parentId')
+  prevStatuses(@Param('parentId') parentId: number) {
+    return this.statusesService.getStatusesByParentId(parentId);
   }
 }

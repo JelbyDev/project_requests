@@ -31,6 +31,7 @@ export class Status extends Model<Status, StatusCreationFields> {
   @Column({ type: DataType.STRING, allowNull: false })
   name: string;
 
+  @ForeignKey(() => Request)
   @Column({ type: DataType.INTEGER })
   parent_id: number;
 }
