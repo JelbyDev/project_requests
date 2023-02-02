@@ -18,6 +18,15 @@ export class StatusesService {
     return status;
   }
 
+  async getStartStatus(): Promise<Status> {
+    const status = await this.statusModel.findOne({
+      where: {
+        prev_status_code: '',
+      },
+    });
+    return status;
+  }
+
   async getStatusByCode(statusCode: string): Promise<Status> {
     const status = await this.statusModel.findOne({
       where: {

@@ -1,14 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { StatusesService } from 'src/statuses/statuses.service';
 import { CreateRequestDto } from './dto/create-request.dto';
 import { UpdateRequestDto } from './dto/update-request.dto';
 import { Request } from './request.model';
 
 @Injectable()
 export class RequestsService {
-  constructor(@InjectModel(Request) private requestModel: typeof Request) {}
+  constructor(
+    @InjectModel(Request) private requestModel: typeof Request,
+    private statusesService: StatusesService,
+  ) {}
 
   async createRequest(requestDto: CreateRequestDto): Promise<Request> {
+    const defaultStatus = await this.statusesService.getStartStatus();
+    requestDto.status_code = defaultStatus.status_code;
     const request = await this.requestModel.create(requestDto);
     return request;
   }

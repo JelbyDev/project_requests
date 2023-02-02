@@ -10,4 +10,6 @@ export class CreateRequestDto {
   @IsNotEmpty({ message: 'project_id заявки отсутствует' })
   @IsNumber({}, { message: 'project_id заявки должен быть числом' })
   project_id: number;
+
+  status_code: string;
 }
