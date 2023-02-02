@@ -1,59 +1,11 @@
 <script setup lang="ts">
-import { ref, toRefs } from 'vue';
-import ProjectCreateOrUpdateForm from '@/components/ProjectCreateOrUpdateForm.vue';
-import { useProjectsListStore } from '@/stores/projectsList';
-
-const { projects, isLoadingProjects } = toRefs(useProjectsListStore());
-const isVisibleProjectForm = ref<boolean>(false);
-function setIsVisibleProjectForm(flag: boolean) {
-  isVisibleProjectForm.value = flag;
-}
+import ProjectsSection from '@/components/ProjectsSection.vue';
 </script>
+
 <template>
   <div>
     <ui-page-title>Список проектов</ui-page-title>
-
-    <Teleport to="main">
-      <ui-loader :is-loading="isLoadingProjects"></ui-loader>
-    </Teleport>
-
-    <template v-if="!isLoadingProjects">
-      <v-row v-if="projects.length">
-        <v-col cols="12" v-for="project in projects" :key="project.id">
-          <v-card
-            :title="project.name"
-            :to="`/projects/${project.id}`"
-            class="w-100"
-            variant="outlined"
-          >
-          </v-card>
-        </v-col>
-      </v-row>
-      <div v-else class="py-12 text-h5 text-center">Список проектов пуст</div>
-
-      <v-row class="justify-end">
-        <v-col cols="auto">
-          <v-btn color="info" @click="setIsVisibleProjectForm(true)"
-            >Новый проект</v-btn
-          >
-        </v-col>
-        <v-col cols="auto">
-          <v-btn color="info">Новая заявка</v-btn>
-        </v-col>
-      </v-row>
-    </template>
-
-    <ui-modal
-      :is-visible="isVisibleProjectForm"
-      @close="setIsVisibleProjectForm"
-    >
-      <template #header>Форма проекта</template>
-      <template #body>
-        <ProjectCreateOrUpdateForm
-          @success="setIsVisibleProjectForm(false)"
-        ></ProjectCreateOrUpdateForm>
-      </template>
-    </ui-modal>
+    <ProjectsSection></ProjectsSection>
   </div>
 </template>
 

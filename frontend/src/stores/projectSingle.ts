@@ -7,7 +7,7 @@ import {
   bindRequestToProjectApi,
   unbindRequestToProjectApi,
 } from '@/api/Request';
-import { useRouter, onBeforeRouteLeave } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 export const useProjectSingleStore = defineStore('project-single', () => {
   const router = useRouter();

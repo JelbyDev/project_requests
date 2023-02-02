@@ -1,37 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { Project } from '@/types';
-import { useProjectsListStore } from '@/stores/projectsList';
 import useValidationProjectForm from '@/composables/useValidationProjectForm';
 
 const props = defineProps<{
   project?: Project;
 }>();
-const emits = defineEmits<{ (e: 'success'): void }>();
-const projectsListStore = useProjectsListStore();
+const emits = defineEmits<{ (e: 'submit', formProject: Project): void }>();
+
 const { isFormValid, validationRules } = useValidationProjectForm();
+
 const isSendingForm = ref<boolean>(false);
 const formProject = ref<Project>(
   props.project ? { ...props.project } : { name: '' },
 );
 
-function sendForm() {
+function onSubmit() {
   isSendingForm.value = true;
-  let sendFunction = null;
-
-  if (formProject.value.id) {
-    sendFunction = projectsListStore.updateProject;
-  } else {
-    sendFunction = projectsListStore.createProject;
-  }
-
-  sendFunction(formProject.value)
-    .then(() => {
-      emits('success');
-    })
-    .finally(() => {
-      isSendingForm.value = false;
-    });
+  emits('submit', formProject.value);
 }
 </script>
 
@@ -52,7 +38,7 @@ function sendForm() {
         color="info"
         :disabled="!isFormValid"
         :loading="isSendingForm"
-        @click="sendForm"
+        @click="onSubmit"
       >
         Сохранить
       </v-btn>
