@@ -2,7 +2,7 @@ import { Get, Controller, Param } from '@nestjs/common';
 import { CreateStatusDto } from './dto/create-status.dto';
 import { StatusesService } from './statuses.service';
 
-@Controller('statuses')
+@Controller('status')
 export class StatusesController {
   constructor(private readonly statusesService: StatusesService) {}
 

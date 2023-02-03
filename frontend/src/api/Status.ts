@@ -4,7 +4,7 @@ import type { Status } from '@/types';
 export async function getNextStatusesApi(statusId: number): Promise<Status[]> {
   let result: Status[] = [];
   try {
-    const response = await $apiInstance.get(`/statuses/next/${statusId}`);
+    const response = await $apiInstance.get(`/status/next/${statusId}`);
     result = response.data;
   } catch (error) {
     alert('Ошибка получения новых статусов');
@@ -17,7 +17,7 @@ export async function getPrevStatusApi(
 ): Promise<Status | null> {
   let result: Status | null = null;
   try {
-    const response = await $apiInstance.get(`/statuses/prev/${statusId}`);
+    const response = await $apiInstance.get(`/status/prev/${statusId}`);
     result = response.data;
   } catch (error) {
     alert('Ошибка получения предыдущих статусов');
