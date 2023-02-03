@@ -30,5 +30,3 @@ const { projects, isLoadingProjects } = toRefs(useProjectsListStore());
     </div>
   </div>
 </template>
-
-<style scoped></style>

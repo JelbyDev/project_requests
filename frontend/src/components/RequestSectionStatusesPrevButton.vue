@@ -29,5 +29,3 @@ function onPrev() {
     <slot></slot>
   </v-btn>
 </template>
-
-<style scoped></style>

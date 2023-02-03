@@ -8,10 +8,3 @@ import ProjectsSection from '@/components/ProjectsSection.vue';
     <ProjectsSection></ProjectsSection>
   </div>
 </template>
-
-<style scoped>
-.loader-wrapper {
-  position: relative;
-  min-height: 150px;
-}
-</style>

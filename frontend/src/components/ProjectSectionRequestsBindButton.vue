@@ -28,5 +28,3 @@ function onBind() {
     <slot></slot>
   </v-btn>
 </template>
-
-<style scoped></style>

@@ -70,5 +70,3 @@ function onSubmitRequestForm(request: Request) {
     </ui-modal>
   </div>
 </template>
-
-<style scoped></style>
