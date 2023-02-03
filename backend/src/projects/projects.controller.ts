@@ -18,6 +18,7 @@ export class ProjectsController {
 
   @Get()
   findAll() {
+    throw new Error('gg');
     return this.projectsService.getAllProjects();
   }
 }

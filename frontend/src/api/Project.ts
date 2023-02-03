@@ -7,7 +7,7 @@ export async function getProjectsApi(): Promise<Project[]> {
     const response = await $apiInstance.get('/projects');
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert('Ошибка получения списка проектов');
   }
   return result;
 }
@@ -20,7 +20,7 @@ export async function getProjectApi(
     const response = await $apiInstance.get(`/project/${projectId}`);
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert('Ошибка получения информации о проекте');
   }
   return result;
 }
@@ -33,7 +33,7 @@ export async function getProjectRequestsApi(
     const response = await $apiInstance.get(`/project/${projectId}/requests`);
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert('Ошибка получения заявок проекта');
   }
   return result;
 }
@@ -46,7 +46,7 @@ export async function createProjectApi(
     const response = await $apiInstance.post('/project', project);
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert('Ошибка добавления проекта');
   }
   return result;
 }
@@ -59,7 +59,7 @@ export async function updateProjectApi(
     const response = await $apiInstance.patch('/project', project);
     return response.data;
   } catch (error) {
-    console.log(error);
+    alert('Ошибка редактирования проекта');
   }
   return result;
 }

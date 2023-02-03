@@ -7,7 +7,7 @@ export async function getFreeRequestsApi(): Promise<Request[]> {
     const response = await $apiInstance.get(`/requests`);
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
   return result;
 }
@@ -20,7 +20,7 @@ export async function getRequestApi(
     const response = await $apiInstance.get(`/request/${requestId}`);
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
   return result;
 }
@@ -33,7 +33,7 @@ export async function createRequestApi(
     const response = await $apiInstance.post('/request', request);
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
   return result;
 }
@@ -46,7 +46,7 @@ export async function updateRequestApi(
     const response = await $apiInstance.patch('/request', request);
     return response.data;
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
   return result;
 }
@@ -62,7 +62,7 @@ export async function bindRequestToProjectApi(
     );
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
   return result;
 }
@@ -78,7 +78,7 @@ export async function unbindRequestToProjectApi(
     );
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
   return result;
 }
@@ -95,7 +95,7 @@ export async function setNextRequestStatusApi(
     );
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
   return result;
 }
@@ -112,7 +112,7 @@ export async function setPrevRequestStatusApi(
     );
     result = response.data;
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
   return result;
 }
