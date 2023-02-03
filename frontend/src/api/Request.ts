@@ -1,5 +1,5 @@
 import $apiInstance from '@/api/AxiosInstance';
-import type { Request, RequestDetail, Status } from '@/types';
+import type { Request, RequestDetail } from '@/types';
 
 export async function getFreeRequestsApi(): Promise<Request[]> {
   let result: Request[] = [];
@@ -7,7 +7,7 @@ export async function getFreeRequestsApi(): Promise<Request[]> {
     const response = await $apiInstance.get(`/requests`);
     result = response.data;
   } catch (error) {
-    alert(error);
+    alert('Ошибка получения заявок, которые не привязаны к проекту');
   }
   return result;
 }
@@ -20,7 +20,7 @@ export async function getRequestApi(
     const response = await $apiInstance.get(`/request/${requestId}`);
     result = response.data;
   } catch (error) {
-    alert(error);
+    alert('Ошибка информации о заявке');
   }
   return result;
 }
@@ -33,7 +33,7 @@ export async function createRequestApi(
     const response = await $apiInstance.post('/request', request);
     result = response.data;
   } catch (error) {
-    alert(error);
+    alert('Ошибка добавления заявки');
   }
   return result;
 }
@@ -46,7 +46,7 @@ export async function updateRequestApi(
     const response = await $apiInstance.patch('/request', request);
     return response.data;
   } catch (error) {
-    alert(error);
+    alert('Ошибка редактирования заявки');
   }
   return result;
 }
@@ -62,7 +62,7 @@ export async function bindRequestToProjectApi(
     );
     result = response.data;
   } catch (error) {
-    alert(error);
+    alert('Ошибка привязки заявки к проекту');
   }
   return result;
 }
@@ -78,7 +78,7 @@ export async function unbindRequestToProjectApi(
     );
     result = response.data;
   } catch (error) {
-    alert(error);
+    alert('Ошибка отвязки заявки от проекта');
   }
   return result;
 }
@@ -95,7 +95,7 @@ export async function setNextRequestStatusApi(
     );
     result = response.data;
   } catch (error) {
-    alert(error);
+    alert('Ошибка обновления статуса заявки');
   }
   return result;
 }
@@ -112,7 +112,7 @@ export async function setPrevRequestStatusApi(
     );
     result = response.data;
   } catch (error) {
-    alert(error);
+    alert('Ошибка обновления статуса заявки');
   }
   return result;
 }

@@ -7,7 +7,7 @@ export async function getNextStatusesApi(statusId: number): Promise<Status[]> {
     const response = await $apiInstance.get(`/statuses/next/${statusId}`);
     result = response.data;
   } catch (error) {
-    alert(error);
+    alert('Ошибка получения новых статусов');
   }
   return result;
 }
@@ -20,7 +20,7 @@ export async function getPrevStatusApi(
     const response = await $apiInstance.get(`/statuses/prev/${statusId}`);
     result = response.data;
   } catch (error) {
-    alert(error);
+    alert('Ошибка получения предыдущих статусов');
   }
   return result;
 }
