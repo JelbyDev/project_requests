@@ -2,16 +2,11 @@
 import { toRefs } from 'vue';
 import { useRoute, onBeforeRouteLeave } from 'vue-router';
 import { useRequestSingleStore } from '@/stores/requestSingle';
+import RequestSectionStatuses from '@/components/RequestSectionStatuses.vue';
 
-const {
-  requestId,
-  request,
-  isLoadingRequest,
-  currentStatus,
-  nextStatuses,
-  prevStatus,
-  isLoadingStatuses,
-} = toRefs(useRequestSingleStore());
+const { requestId, request, isLoadingRequest } = toRefs(
+  useRequestSingleStore(),
+);
 const pageRequestId = Number(useRoute().params?.requestId);
 if (pageRequestId === requestId.value) isLoadingRequest.value = false;
 requestId.value = pageRequestId;
@@ -30,33 +25,8 @@ onBeforeRouteLeave(() => {
     <div v-if="request && !isLoadingRequest">
       <div class="text-h5 mb-3">Описание</div>
       {{ request.description }}
-
-      <div class="text-h5 mt-10 mb-3">Статус</div>
-      <div v-if="isLoadingStatuses" class="loader-wrapper">
-        <ui-loader :is-loading="isLoadingStatuses">
-          Загружаю информацию по статусам...
-        </ui-loader>
-      </div>
-      <div v-else>
-        <div>Текущий статус: {{ currentStatus?.name }}</div>
-        <div>
-          Следующие статусы:
-          <div v-for="status in nextStatuses" :key="status.id">
-            {{ status.name }}
-          </div>
-        </div>
-        <div>
-          Предыдущй:
-          {{ prevStatus?.name }}
-        </div>
-      </div>
     </div>
+
+    <RequestSectionStatuses></RequestSectionStatuses>
   </div>
 </template>
-
-<style scoped>
-.loader-wrapper {
-  position: relative;
-  min-height: 150px;
-}
-</style>

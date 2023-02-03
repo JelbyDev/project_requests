@@ -34,6 +34,17 @@ export class StatusesService {
     return status;
   }
 
+  async getNextStatuses(statusId: number): Promise<Status[]> {
+    const statuses = this.getStatusesByParentId(statusId);
+    return statuses;
+  }
+
+  async getPrevStatus(statusId: number): Promise<Status> {
+    const currentStatus = await this.getStatusById(statusId);
+    const prevStatus = await this.getStatusById(currentStatus.parent_id);
+    return prevStatus;
+  }
+
   async getStatusById(statusId: number): Promise<Status> {
     const status = await this.statusModel.findOne({
       where: {

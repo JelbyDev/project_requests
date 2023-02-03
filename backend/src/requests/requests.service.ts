@@ -28,6 +28,12 @@ export class RequestsService {
     return request;
   }
 
+  async updateRequestProjectId(requestId: number, projectId: number) {
+    const request = await this.getRequestById(requestId);
+    await request.update({ project_id: projectId });
+    return request;
+  }
+
   async getRequestById(requestId: number): Promise<Request> {
     const request = await this.requestModel.findOne({
       include: { all: true },
@@ -53,9 +59,29 @@ export class RequestsService {
     await request.destroy();
   }
 
-  async updateRequestProjectId(requestId: number, projectId: number) {
+  async setPrevStatus(requestId: number, statusId: number): Promise<Request> {
     const request = await this.getRequestById(requestId);
-    await request.update({ project_id: projectId });
-    return request;
+    const prevStatus = await this.statusesService.getPrevStatus(
+      request.status_id,
+    );
+
+    if (prevStatus.id === statusId) {
+      await request.update({ status_id: statusId });
+      return await this.getRequestById(requestId);
+    } else {
+      throw new Error('Ошибка изменения статуса');
+    }
+  }
+
+  async setNextStatus(requestId: number, statusId: number): Promise<Request> {
+    const request = await this.getRequestById(requestId);
+    const nextStatus = await this.statusesService.getStatusById(statusId);
+
+    if (request.status_id === nextStatus.parent_id) {
+      await request.update({ status_id: statusId });
+      return await this.getRequestById(requestId);
+    } else {
+      throw new Error('Ошибка изменения статуса');
+    }
   }
 }

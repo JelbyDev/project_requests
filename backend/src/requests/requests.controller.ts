@@ -49,13 +49,19 @@ export class RequestController {
   }
 
   @Post(':requestId/status/next')
-  setNextStatus() {
-    return 'post';
+  setNextStatus(
+    @Param('requestId') requestId: number,
+    @Body('id') statusId: number,
+  ) {
+    return this.requestsService.setNextStatus(requestId, statusId);
   }
 
   @Post(':requestId/status/prev')
-  setPrevStatus() {
-    return 'post';
+  setPrevStatus(
+    @Param('requestId') requestId: number,
+    @Body('id') statusId: number,
+  ) {
+    return this.requestsService.setPrevStatus(requestId, statusId);
   }
 
   @Patch(':requestId')

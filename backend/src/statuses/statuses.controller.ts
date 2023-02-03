@@ -6,7 +6,7 @@ import { StatusesService } from './statuses.service';
 export class StatusesController {
   constructor(private readonly statusesService: StatusesService) {}
 
-  @Get('create_default')
+  @Get('createDefault')
   async findById() {
     const defaultStatuses: CreateStatusDto[] = [
       { name: 'Заготовка', status_code: 'work_piece', parent_status_code: '' },
@@ -41,12 +41,11 @@ export class StatusesController {
 
   @Get('next/:statusId')
   nextStatuses(@Param('statusId') statusId: number) {
-    return this.statusesService.getStatusesByParentId(statusId);
+    return this.statusesService.getNextStatuses(statusId);
   }
 
   @Get('prev/:statusId')
-  async prevStatuses(@Param('statusId') statusId: number) {
-    const status = await this.statusesService.getStatusById(statusId);
-    return this.statusesService.getStatusById(status.parent_id);
+  prevStatuses(@Param('statusId') statusId: number) {
+    return this.statusesService.getPrevStatus(statusId);
   }
 }

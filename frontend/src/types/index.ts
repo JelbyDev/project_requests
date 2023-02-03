@@ -9,7 +9,10 @@ export interface Request {
   description: string;
   project_id: number;
   status_id: number;
-  current_status?: Status;
+}
+
+export interface RequestDetail extends Request {
+  current_status: Status | null;
 }
 
 export interface Status {
