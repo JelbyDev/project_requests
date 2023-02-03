@@ -8,8 +8,11 @@ const { requestId, request, isLoadingRequest } = toRefs(
   useRequestSingleStore(),
 );
 const pageRequestId = Number(useRoute().params?.requestId);
-if (pageRequestId === requestId.value) isLoadingRequest.value = false;
-requestId.value = pageRequestId;
+if (pageRequestId === requestId.value) {
+  isLoadingRequest.value = false;
+} else {
+  requestId.value = pageRequestId;
+}
 
 onBeforeRouteLeave(() => {
   isLoadingRequest.value = true;
@@ -25,8 +28,8 @@ onBeforeRouteLeave(() => {
     <div v-if="request && !isLoadingRequest">
       <div class="text-h5 mb-3">Описание</div>
       {{ request.description }}
-    </div>
 
-    <RequestSectionStatuses></RequestSectionStatuses>
+      <RequestSectionStatuses></RequestSectionStatuses>
+    </div>
   </div>
 </template>

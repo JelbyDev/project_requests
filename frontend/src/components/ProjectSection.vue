@@ -18,8 +18,9 @@ const pageProjectId = Number(useRoute().params?.projectId);
 if (pageProjectId === projectId.value) {
   loadRequests();
   isLoadingProject.value = false;
+} else {
+  projectId.value = pageProjectId;
 }
-projectId.value = pageProjectId;
 
 onBeforeRouteLeave(() => {
   isLoadingProject.value = true;
