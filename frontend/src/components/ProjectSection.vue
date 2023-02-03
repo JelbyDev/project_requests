@@ -12,9 +12,13 @@ const {
   projectRequests,
   freeRequests,
 } = toRefs(useProjectSingleStore());
+const { loadRequests } = useProjectSingleStore();
 
 const pageProjectId = Number(useRoute().params?.projectId);
-if (pageProjectId === projectId.value) isLoadingProject.value = false;
+if (pageProjectId === projectId.value) {
+  loadRequests();
+  isLoadingProject.value = false;
+}
 projectId.value = pageProjectId;
 
 onBeforeRouteLeave(() => {

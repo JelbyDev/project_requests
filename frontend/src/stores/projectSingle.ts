@@ -38,6 +38,8 @@ export const useProjectSingleStore = defineStore('project-single', () => {
   }
 
   async function loadRequests(): Promise<void> {
+    isLoadingRequests.value = true;
+
     let freeRequests: Request[] = [];
     let projectRequests: Request[] = [];
 
@@ -89,7 +91,7 @@ export const useProjectSingleStore = defineStore('project-single', () => {
   }
 
   watch(projectId, () => {
-    loadProject();
+    if (projectId.value !== 0) loadProject();
   });
 
   return {
@@ -97,6 +99,7 @@ export const useProjectSingleStore = defineStore('project-single', () => {
     project,
     isLoadingProject,
     isLoadingRequests,
+    loadRequests,
     freeRequests,
     projectRequests,
     bindRequestToProject,
