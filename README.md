@@ -1,4 +1,4 @@
-# Менеджер проектых заявок
+# Менеджер проектных заявок
 
 ## [Требование к проекту](https://github.com/areal-team/tz/tree/master/requests)
 
